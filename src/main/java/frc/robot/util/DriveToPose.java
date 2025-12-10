@@ -1,16 +1,10 @@
-package frc.robot.util;
-
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-
-import org.littletonrobotics.junction.Logger;
-
 // Copyright (c) 2025 FRC 6328
 // http://github.com/Mechanical-Advantage
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file at
 // the root directory of this project.
+package frc.robot.util;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -26,8 +20,11 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.drive.Drive;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.drive.Drive;
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+import org.littletonrobotics.junction.Logger;
 
 public class DriveToPose extends Command {
 
@@ -155,8 +152,7 @@ public class DriveToPose extends Command {
     final double linearS = MathUtil.clamp(linearFF.get().getNorm() * 3.0, 0.0, 1.0);
     final double thetaS = MathUtil.clamp(Math.abs(omegaFF.getAsDouble()) * 3.0, 0.0, 1.0);
     driveVelocity =
-        driveVelocity.interpolate(
-            linearFF.get().times(TunerConstants.maxLinearSpeed), linearS);
+        driveVelocity.interpolate(linearFF.get().times(TunerConstants.maxLinearSpeed), linearS);
     thetaVelocity =
         MathUtil.interpolate(
             thetaVelocity, omegaFF.getAsDouble() * TunerConstants.maxAngularSpeed, thetaS);
